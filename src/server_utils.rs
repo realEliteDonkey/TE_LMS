@@ -1,10 +1,31 @@
-use sqlx::{ postgres::{PgPoolOptions, Postgres,}, pool::Pool, };
+use sqlx::{ postgres::{PgPoolOptions, Postgres,}, pool::Pool };
 use std::env;
+use axum_extra::extract::cookie::SignedCookieJar;
+use axum::{
+    middleware,
+    extract::Request,
+    response::{IntoResponse, Redirect, Response},
+};
 
 #[derive(PartialEq)]
 pub enum ServerCode {
     Success,
     Fail,
+}
+
+pub async fn auth_middleware(
+    jar: SignedCookieJar,
+    req: Request,
+    next: middleware::Next,
+) -> Response {
+    // check if signed cookie exists and is valid
+    if let Some(_cookie) = jar.get("auth_token") {
+        // token is valid; continue to the handler
+        next.run(req).await
+    } else {
+        // redirect to login or return unauthorized
+        Redirect::to("/login").into_response()
+    }
 }
 
 pub fn load_env() -> ServerCode {
