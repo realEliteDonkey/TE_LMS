@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="frontend/general.css">
+</head>
+<body>
+    <h1>Create Account</h1>
+    <div>
+        <div class="login-container">
+            <h3>Sign Up</h3>
+            <form id="signup_form" action="/create_account_user" method="POST">
+                <label for="first_name">first name</label>
+                <input id="first_name" type="text" name="first_name" autocomplete="given-name" required>
+
+                <label for="last_name">last name</label>
+                <input id="last_name" type="text" name="last_name" autocomplete="family-name" required>
+
+                <label for="email">email</label>
+                <input id="email" type="email" name="email" autocomplete="email" required>
+
+                <label for="password">create password</label>
+                <input id="password" type="password" name="password" autocomplete="new-password" required>
+
+                <label for="confirm_password">reenter password</label>
+                <input id="confirm_password" type="password" name="confirm_password" autocomplete="new-password" required>
+
+                <button type="submit">create account</button>
+                <a href="/">Back to log in</a>
+            </form>
+        </div>
+
+        <div id="error_msg"></div>
+    </div>
+</body>
+</html>
+
