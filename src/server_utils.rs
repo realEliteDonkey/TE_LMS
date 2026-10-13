@@ -1,5 +1,6 @@
 use sqlx::{ postgres::{PgPoolOptions, Postgres,}, pool::Pool };
 use std::env;
+use std::path::Path;
 use axum_extra::extract::cookie::SignedCookieJar;
 use axum::{
     middleware,
@@ -24,11 +25,16 @@ pub async fn auth_middleware(
         next.run(req).await
     } else {
         // redirect to login or return unauthorized
-        Redirect::to("/login").into_response()
+        Redirect::to("/").into_response()
     }
 }
 
 pub fn load_env() -> ServerCode {
+    if !Path::new(".env").exists() && env::var_os("DATABASE_URL").is_some() {
+        println!("> No .env file found; using environment variables.");
+        return ServerCode::Success;
+    }
+
     match dotenvy::dotenv() {
         Ok(_) => {
             println!("> Successfully loaded .env vars.");
@@ -45,7 +51,7 @@ pub fn get_db_url() -> Result<String, ServerCode> {
     println!("> fetching postgres db url.");
     match env::var("DATABASE_URL") {
         Ok(url) => {
-            println!("> url found: {}", url);
+            println!("> db url found.");
             Ok(url)
         },
         Err(e) => {
