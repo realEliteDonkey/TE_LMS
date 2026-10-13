@@ -2,8 +2,7 @@
   "version": 2,
   "services": {
     "axum-backend": {
-      "runtime": "container",
-      "src": "."
+      "runtime": "container"
     }
   },
   "rewrites": [
