@@ -33,7 +33,7 @@ async fn main() {
     let state = AppState { db: pool, key: Key::generate() };
 
     // get IpV4 socket
-    let socket = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 3000);
+    //let socket = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 3000);
 
     let protected_routes = Router::new()
         .route("/dashboard", get(get_dashboard_handler))
