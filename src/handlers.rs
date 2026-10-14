@@ -163,7 +163,7 @@ pub async fn create_user_post(
     // check email doesnt exist in DB
     let count: i64 = match sqlx::query_scalar(
         r#"
-        SELECT COUNT(*) 
+        SELECT COUNT(*)
         FROM users 
         WHERE email = $1
         "#
@@ -207,7 +207,9 @@ pub async fn create_user_post(
     }
 
     println!("> Updating db...");
-    let fullname = format!("{} {}", payload.first_name.to_lowercase().trim(), payload.last_name.to_lowercase().trim());
+    let fullname = format!("{} {}", 
+        payload.first_name.to_lowercase().trim(), 
+        payload.last_name.to_lowercase().trim());
 
     // else update db with new user and redirect to dashboard
     match sqlx::query(

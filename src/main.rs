@@ -48,25 +48,13 @@ async fn main() {
         .with_state(state);
 
 
-    // bind socket to tokio TcpListener
-    // let listener = match tokio::net::TcpListener::bind(&socket).await {
-    //     Ok(listener) => {
-    //         println!("> server listening @ -> {}", &socket);
-    //         listener
-    //     },
-    //     Err(e) => {
-    //         eprintln!("> Failed to bind addr to listener -> {e}");
-    //         return;
-    //     },
-    // };
-
     let port = env::var("PORT")
         .unwrap_or_else(|_| "8080".to_string())
         .parse::<u16>()
         .expect("PORT must be a valid number");
 
     // 3. Bind to 0.0.0.0 using the dynamic port
-    let addr = SocketAddr::from(([0, 0, 0, 0], port));
+    let addr = SocketAddr::from(([127, 0, 0, 1], port));
 
     let listener = match tokio::net::TcpListener::bind(addr).await {
         Ok(listener) => {
