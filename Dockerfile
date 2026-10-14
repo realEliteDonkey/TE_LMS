@@ -64,6 +64,10 @@ USER appuser
 # Copy the executable from the "build" stage.
 COPY --from=build /bin/server /bin/
 
+# The handlers load templates and static assets relative to the working directory.
+WORKDIR /app
+COPY --chown=appuser:appuser frontend ./frontend
+
 # Expose the port that the application listens on.
 EXPOSE 3000
 
